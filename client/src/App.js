@@ -1,21 +1,42 @@
-import logo from './logo.svg';
-import './App.css';
-import {useState, useEffect} from "react";
+import React , {useState, useEffect} from "react";
+import LandingPage from './components/LandingPage';
+import { Route, Routes  } from 'react-router-dom';
 
-function App() {
-  const [count, setCount] = useState(0);
 
-  useEffect(() => {
-    fetch("/hello")
-      .then((r) => r.json())
-      .then((data) => setCount(data.count));
-  }, []);
+import BookingRequest from "./components/BookingRequest";
+import ServiceProviderDashboard from "./components/ServiceProviderDashboard"; 
+import { Link } from "@chakra-ui/react";
+import AddQuotation from "./components/AddQuotation";
+
+export default function App(){
+
+  const [services, setServices]= useState([])
+
+  useEffect(()=>{
+    fetch ("/services")
+    .then(r=>r.json())
+    .then(services=>setServices(services))
+  },[])
+
+
+  function addRequest(newRequest){
+    setServices([...services, newRequest])
+  }
+
 
   return (
-    <div className="App">
-      <h1>Page Count: {count}</h1>
-    </div>
-  );
+
+    <>
+    <Routes>
+      <Route exact path= "/" element={<LandingPage />}></Route>
+      <Route path="booking_request" element={<BookingRequest addRequest={addRequest}/>} ></Route>
+      <Route path="service_provider_dashboard" element={<ServiceProviderDashboard/>} ></Route>
+      {/* <Route exact path= "addQuote" element={<AddQuotation />}></Route> */}
+       
+      </Routes>
+      
+      </>
+  )
 }
 
-export default App;
+
