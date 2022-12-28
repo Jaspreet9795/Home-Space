@@ -64,10 +64,14 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_13_185732) do
 
   create_table "users", force: :cascade do |t|
     t.string "name"
+    t.string "role"
+    t.string "service_provided"
     t.string "address"
+    t.integer "zip"
+    t.string "state"
     t.string "email"
-    t.string "password"
-    t.integer "phone"
+    t.string "password_digest"
+    t.string "phone"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

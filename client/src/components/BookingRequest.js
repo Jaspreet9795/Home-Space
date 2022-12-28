@@ -4,8 +4,6 @@ import { PlusOutlined } from '@ant-design/icons';
 import { Form, Input, Button, Select,  Upload,} from 'antd';
 import DatePicker from "react-multi-date-picker";
 
-
-
 const { TextArea } = Input;
 
 
@@ -53,8 +51,8 @@ export default function BookingRequest ({addRequest}){
       <Form.Item label="Select Category" >
           <Select onChange= {e=>setCategory(e)} placeholder='Select Category..' required>
             <Select.Option value="landscaping">Landscaping</Select.Option>
-            <Select.Option value="electricians">Electricians</Select.Option>
-            <Select.Option value="plumbers">Plumbers</Select.Option>
+            <Select.Option value="electrician">Electrician</Select.Option>
+            <Select.Option value="plumber">Plumber</Select.Option>
             <Select.Option value="home_cleaning">Home Cleaning</Select.Option>
             <Select.Option value="home_painting">Home Painting</Select.Option>
           </Select>

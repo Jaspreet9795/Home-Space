@@ -13,16 +13,28 @@ export default function ServiceProviderDashboard (){
    const formRef = useRef(null);
    
    
-    useEffect(()=>{
-        fetch("/services")
-        .then(r=>r.json())
-        .then (services=>{
-            setServices(services);
-            setId(services[0].id)
+    // useEffect(()=>{
+    //     fetch("/services")
+    //     .then(r=>r.json())
+    //     .then (services=>{
+    //         setServices(services);
+    //         setId(services[0].id)
             
-            console.log("this is printing" + services[0].id)
-        })
-    },[])
+    //         console.log("this is printing" + services[0].id)
+    //     })
+    // },[])
+
+    useEffect(()=>{
+      fetch("/filter_service")
+      .then(r=>r.json())
+      .then (services=>{
+        console.log("checking filter services"+JSON.stringify(services))
+          setServices(services);
+          setId(services[0].id)
+          
+          console.log("this is printing" + services[0].id)
+      })
+  },[])
 
 
     useEffect(()=>{

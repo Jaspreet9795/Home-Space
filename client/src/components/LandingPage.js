@@ -9,18 +9,19 @@ import "swiper/css/pagination";
 import "swiper/css/navigation";
 // import "./styles.css";
 import {Autoplay, Pagination, Navigation } from "swiper";
+import { Link } from "react-router-dom";
 
 
 const { Meta } = Card;
 
 
-export default function LandingPage(){
+export default function LandingPage({updateUser, checkLogin, currentUser}){
    
    
    
     return (
     <div style={{ backgroundImage: "url(https://www.residencestyle.com/wp-content/uploads/2019/03/home-maintenance.jpg)" }}>
-        <Header></Header>
+        <Header updateUser={updateUser} checkLogin={checkLogin} currentUser={currentUser}></Header>
         
         <Container style={{
             display: 'flex',
@@ -60,7 +61,9 @@ export default function LandingPage(){
          cover={<img style={{ height:450, width:650 }}  alt="Landscape" src="https://i.insider.com/62dafedf21142200185ed6d9?width=750&format=jpeg&auto=webp" />}
         >
         <Meta  title="Landscaping" description="www.instagram.com"></Meta>
+       <Link to="booking_request">
         <Button>Book</Button> 
+        </Link>
         </Card>
                
         </SwiperSlide>

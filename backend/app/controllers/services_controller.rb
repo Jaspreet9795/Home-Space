@@ -12,6 +12,12 @@ class ServicesController < ApplicationController
         render json: service, serializer: ServiceWithQuotationsSerializer , status: :ok
     end
 
+    def filter_service
+        user = current_user
+        service = Service.where(service_type: current_user.service_provided)
+        render json: service
+    end 
+
     # def  project_tasks
     #     project = Project.find(params[:id])
     #     render json: project, serializer: ProjectWithTasksSerializer,  status: :ok
@@ -19,7 +25,7 @@ class ServicesController < ApplicationController
 
     def create
         puts(service_params)
-        service = Service.create!(service_params)
+        service = Service.create!(service_params.merge(user_id: current_user.id) )
         render json: service, status: :accepted
     end
 
