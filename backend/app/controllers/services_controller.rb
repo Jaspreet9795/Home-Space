@@ -1,27 +1,32 @@
 class ServicesController < ApplicationController
-
+    include ::ActionController::Serialization
     rescue_from ActiveRecord::RecordNotFound, with: :entity_not_found_response
     rescue_from ActiveRecord::RecordInvalid, with: :unprocessable_entity_response
 
     def index 
         services = Service.all
-        render json: services, status: :ok
+        render json: services , each_serializer: ServiceWithQuotationsSerializer, status: :ok
     end
     def  show 
         service = Service.find(params[:id])
+        puts('show service ', service.inspect)
         render json: service, serializer: ServiceWithQuotationsSerializer , status: :ok
     end
 
     def filter_service
         user = current_user
         service = Service.where(service_type: current_user.service_provided)
-        render json: service
+        render json: service 
     end 
 
-    # def  project_tasks
-    #     project = Project.find(params[:id])
-    #     render json: project, serializer: ProjectWithTasksSerializer,  status: :ok
-    # end
+    def filter_user_service
+       user= current_user
+       service = Service.where(user_id: current_user.id)
+    #    service = Service.where(user_id: current_user.id).to_a
+       render json: service, each_serializer: ServiceWithQuotationsSerializer,  status: :ok
+    end 
+
+   
 
     def create
         puts(service_params)

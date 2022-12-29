@@ -12,7 +12,8 @@ class QuotationsController < ApplicationController
     end
 
     def create
-        quotation = Quotation.create!(quotation_params)
+
+        quotation = Quotation.create!(quotation_params.merge(service_provider_id: current_user.id))
         render json: quotation, status: :accepted
     end
 
@@ -31,7 +32,7 @@ class QuotationsController < ApplicationController
     private
 
     def quotation_params
-        params.permit(:quotation, :comment, :date, :service_provider_id, :service_id)
+        params.permit(:quotation, :comment, :date, :service_id)
     end
 
     def entity_not_found_response

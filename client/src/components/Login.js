@@ -55,10 +55,11 @@ export default function Login ({ updateUser }) {
           if (user.id !== undefined) {
             console.log('checking response ' + JSON.stringify(r))
             updateUser(user)
-            if (user.role=="service_provider"){
-            navigate('/service_provider_dashboard')}
-            else {
-            navigate('/')}
+            if (user.role == 'service_provider') {
+              navigate('/service_provider_dashboard')
+            } else {
+              navigate('/')
+            }
           } else {
             // TODO: set error message because credentials are wrong
           }
