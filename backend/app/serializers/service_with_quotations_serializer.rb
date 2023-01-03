@@ -4,7 +4,7 @@ class ServiceWithQuotationsSerializer < ActiveModel::Serializer
     # each_serializer: QuotationSerializer
     # def quotations
     #   object.quotations.map do |quotation|
-    #     QuotationSerializer.new(quotation).attributes
+    #     Qrails suotationSerializer.new(quotation).attributes
     #   end
     # end
   end

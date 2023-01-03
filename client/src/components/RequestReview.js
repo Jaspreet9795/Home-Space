@@ -23,7 +23,7 @@ export default function RequestReview ({id, formRef, handleClick}){
     
     return loaded?(
        <div style={{marginLeft:20, marginTop:20}}  >
-         <Card maxW='md' >
+         <Card maxW='md' backgroundColor={"white"} >
           <CardBody>
             <Stack mt='6' spacing='3'>
               <Heading size='md'>Service No. - {service.id}</Heading>

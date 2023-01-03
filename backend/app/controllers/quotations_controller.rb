@@ -29,6 +29,35 @@ class QuotationsController < ApplicationController
         head :no_content
     end
 
+    def confirm_quote
+        quotation= Quotation.find(params[:id])
+        service = Service.find(quotation.service_id)
+        confirmed_quotation = service.quotations.where(confirmed: true)
+        if confirmed_quotation.length>0
+            render json: { "error": "Service already has confirmed quote" }, status: :unprocessable_entity
+        else
+            quotation.update!(confirmed: true)
+            HomeSpaceMailer.with(user: current_user).service_request_confirmation.deliver_now
+            render json: quotation
+        end
+       
+    end
+
+    def show_confirmation
+        bookings = Quotation.where(service_provider_id: current_user.id , confirmed: true)
+        render json: bookings ,each_serializer: QuotationWithUsersSerializer ,  status: :ok
+    end
+    
+
+    # def show_user_details
+    #    booked = Quotation.where(service_provider_id: current_user.id , confirmed: true)
+    #     service = Service.find(booked.service_id)
+    #     user = User.find(service.user_id)
+    #     render json: user, status: :ok
+    
+    # end
+
+
     private
 
     def quotation_params

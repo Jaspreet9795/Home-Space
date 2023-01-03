@@ -1,7 +1,7 @@
 import React from "react";
-import Header from "./Header";
+import UserHeader from "./UserHeader";
 import { Card } from 'antd';
-import { Container , Button} from "@chakra-ui/react";
+import { Container , Button, Box, Text, Center, Heading} from "@chakra-ui/react";
 // import { Carousel } from 'antd';
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
@@ -15,33 +15,61 @@ import { Link } from "react-router-dom";
 const { Meta } = Card;
 
 
-export default function LandingPage({updateUser, checkLogin, currentUser}){
+export default function LandingPage({updateUser, currentUser}){
    
    
    
     return (
-    <div style={{ backgroundImage: "url(https://www.residencestyle.com/wp-content/uploads/2019/03/home-maintenance.jpg)" }}>
-        <Header updateUser={updateUser} checkLogin={checkLogin} currentUser={currentUser}></Header>
-        
-        <Container style={{
+    <>
+    {/* // <div style={{ backgroundImage: "url(https://www.residencestyle.com/wp-content/uploads/2019/03/home-maintenance.jpg)" }}> */}
+        <UserHeader updateUser={updateUser}  currentUser={currentUser}></UserHeader>
+
+        {/* <div   style={{ marginTop:"400px",  alignItems:"center", display:"flex", justifyContent:"center"}} > */}
+      {/* <div style={{ backgroundImage: "url(https://www.residencestyle.com/wp-content/uploads/2019/03/home-maintenance.jpg)", backgroundSize:"cover" }} > */}
+         
+         <Box    marginTop={'50px'} marginStart={'150px'} height='200px' width='1200px'  display={'flex'}  position={'fixed'}
+        >
+          <div style ={{marginLeft:"300px", h:'100px' ,color:"black"}} >
+            <Heading fontSize={"2xl"}> We provide Home Services on demand!</Heading>
+          
+           <h2 style={{marginLeft:"-20px", color:"gray"}}> Home Cleaning | Landscaping | Electrician | Plumber | Home Painting</h2>
+          </div>
+
+
+        </Box>
+  
+
+        <Box
+       
+        marginTop={'150px'}
+        marginStart={'150px'}
+        position={'fixed'}
+        height='500px'
+        width='1200px'
+        display={'flex'}
+        borderRadius='2xl'
+        borderWidth={'thin'}
+       justifyItems={"stretch"}
+      >
+        {/* <Container style={{
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
             height: '90vh',
             width: '1200px'
-           }} >
+           }} > */}
 
        <Swiper
 
        marginTop="300px"
-       slidesPerView={1}
-       slidesPerGroup={1}
+       slidesPerView={3}
+       slidesPerGroup={3}
        loop={true}
        loopFillGroupWithBlank={true}
-        spaceBetween={10}
-        centeredSlides={true}
+        spaceBetween={30}
+        // centeredSlides={true}
         autoplay={{
-          delay: 2500,
+          delay: 5000,
           disableOnInteraction: false,
         }}
         pagination={{
@@ -51,37 +79,81 @@ export default function LandingPage({updateUser, checkLogin, currentUser}){
         modules={[Autoplay, Pagination, Navigation]}
         className="mySwiper"
         style={{width: '100%'}}
+        justifyContent="space-evenly"
+        
       >
 
-
+       
         <SwiperSlide >
+        <Link to="booking_request">
         <Card 
          hoverable
-         style={{width: 550, height:600}}
-         cover={<img style={{ height:450, width:650 }}  alt="Landscape" src="https://i.insider.com/62dafedf21142200185ed6d9?width=750&format=jpeg&auto=webp" />}
+         style={{width: 350, height:400, marginLeft:"40px",  marginRight:"0px", marginTop:"30px"}}
+         cover={<img style={{ height:290, width:350,  objectFit:"cover"}}  alt="Landscape" src="https://www.thespruce.com/thmb/3w5ScaETAEEyw2d429FFw7skWH8=/4119x2741/filters:fill(auto,1)/spring-lawn-care-2132455-09-df14429ef98948e69439952f6e7287fa.jpg" />}
         >
-        <Meta  title="Landscaping" description="www.instagram.com"></Meta>
-       <Link to="booking_request">
+        <Meta  title="Landscaping" description="Lawn Care | Leaf Removal | Bush Trimming | Sodding | Lawn Treatment"></Meta>
+       {/* <Link to="booking_request">
         <Button>Book</Button> 
-        </Link>
+        </Link> */}
         </Card>
+        </Link>
                
         </SwiperSlide>
+        
         <SwiperSlide>
+        <Link to="booking_request">
         <Card 
          hoverable
-         style={{width: 550, height:600}}
-         cover={ <div ><img style={{ height:450, width:650 }}  alt="Landscape" src="https://www.4servicepros.com/wp-content/uploads/2022/11/electrical-outlet-installation.jpg" /></div>}
+         style={{width: 350, height:400, marginLeft:"20px", marginTop:"30px" }}
+         cover={ <div ><img style={{height:290, width:350,  objectFit:"cover" }}  alt="Landscape" src="https://thisoldhouse.jppadmin.com/wp-content/uploads/sites/10/2022/06/AdobeStock_313494367-scaled.jpeg" /></div>}
         >
-        <Meta  title="Europe Street beat" description="www.instagram.com" />
+        <Meta  title="Plumbers" description="Repair | Replacement | Installation | Unclogging Blockage | Leak repair" />
         </Card>
+        </Link>
         </SwiperSlide>
-        {/* <SwiperSlide>Slide 3</SwiperSlide> */}
+
+        <SwiperSlide>
+        <Link to="booking_request">
+        <Card 
+         hoverable
+         style={{width: 350, height:400, marginLeft:"-10px", marginTop:"30px" }}
+         cover={ <div ><img style={{height:290, width:350,  objectFit:"cover"}}  alt="Landscape" src="https://as1.ftcdn.net/v2/jpg/02/75/82/56/1000_F_275825618_fGYIBizEgWEdiG07tKEcJn5KCm4a0oTW.jpg" /></div>}
+        >
+        <Meta  title="Electricians" description="Servicing | Repair | Installation | UnInstallation" />
+        </Card>
+        </Link>
+        </SwiperSlide>
+
+        <SwiperSlide>
+        <Link to="booking_request">
+        <Card 
+         hoverable
+         style={{width: 350, height:400, marginLeft:"200px", marginTop:"30px" }}
+         cover={ <div ><img style={{height:290, width:350,  objectFit:"cover"}}  alt="Landscape" src="https://5.imimg.com/data5/MS/GS/MY-3497762/home-painting-services-1000x1000.jpg" /></div>}
+        >
+        <Meta  title="Home Painting" description="Water Proofing | Textured Walls | Enamel Painting" />
+        </Card>
+        </Link>
+        </SwiperSlide>
+       
+        <SwiperSlide>
+        <Link to="booking_request">
+        <Card 
+         hoverable
+         style={{width: 350, height:400, marginLeft:"200px", marginTop:"30px" }}
+         cover={ <div ><img style={{height:290, width:350,  objectFit:"cover"}}  alt="Landscape" src="https://www.smcflorida.com/wp-content/uploads/2022/08/sm-residential-cleaning.jpg" /></div>}
+        >
+        <Meta  title="Home Cleaning" description="Vacuuming | All Areas Deep Cleaning including furniture, windows, doors, walls | Mopping  " />
+        </Card>
+        </Link>
+        </SwiperSlide>
+       
+    
        
       </Swiper>
 
       
-      </Container>
+      {/* </Container> */}
 
 
 
@@ -89,34 +161,13 @@ export default function LandingPage({updateUser, checkLogin, currentUser}){
 
 
 
+    
 
+    </Box>
+    {/* </div> */}
+    </>
+    //  </div>
+    
+    )}
 
-
-        {/* <Container style={{
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        height: '90vh',
-        width:'2xl'
-           }} >
-        <Card 
-         hoverable
-         style={{width: 550, height:400}}
-         cover={<img style={{ height:300, width:400 }}  alt="Landscape" src="https://i.insider.com/62dafedf21142200185ed6d9?width=750&format=jpeg&auto=webp" />}
-        >
-        <Meta  title="Europe Street beat" description="www.instagram.com" />
-        </Card>
-
-        <Card 
-         hoverable
-         style={{width: 550, height:400}}
-
-         cover={ <div ><img style={{ height:300, width:400 }}  alt="Landscape" src="https://www.4servicepros.com/wp-content/uploads/2022/11/electrical-outlet-installation.jpg" /></div>}
-        >
-        <Meta  title="Europe Street beat" description="www.instagram.com" />
-        </Card>
-        </Container> */}
-    </div>
-   )
-}
 

@@ -6,6 +6,7 @@ import { Route, Routes  } from 'react-router-dom';
 import BookingRequest from "./components/BookingRequest";
 import ServiceProviderDashboard from "./components/ServiceProviderDashboard"; 
 import UserRequests from "./components/UserRequests";
+import ConfirmedBookings from "./components/ConfirmedBookings";
 
 export default function App(){
 
@@ -57,9 +58,9 @@ export default function App(){
     <Routes>
       <Route exact path= "/" element={<LandingPage updateUser={updateUser}   currentUser={currentUser}/>}></Route>
       <Route path="booking_request" element={<BookingRequest addRequest={addRequest}/>} ></Route>
-      <Route path="service_provider_dashboard" element={<ServiceProviderDashboard/>} ></Route>
-      <Route path="my_requests" element={<UserRequests></UserRequests>}></Route>
-    
+      <Route path="service_provider_dashboard" element={<ServiceProviderDashboard updateUser={updateUser}   currentUser={currentUser}/>} ></Route>
+      <Route path="my_requests" element={<UserRequests updateUser={updateUser}   currentUser={currentUser}></UserRequests>}></Route>
+      <Route path="confirmed_booking" element={<ConfirmedBookings updateUser={updateUser}   currentUser={currentUser}></ConfirmedBookings>}></Route>
       </Routes>
 
       </>

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_12_13_185732) do
+ActiveRecord::Schema[7.0].define(version: 2023_01_02_232218) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -22,6 +22,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_13_185732) do
     t.bigint "service_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "confirmed"
     t.index ["service_id"], name: "index_quotations_on_service_id"
     t.index ["service_provider_id"], name: "index_quotations_on_service_provider_id"
   end
@@ -52,7 +53,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_13_185732) do
   create_table "services", force: :cascade do |t|
     t.string "service_type"
     t.string "description"
-    t.string "images"
+    t.binary "images"
     t.date "dates", default: [], array: true
     t.bigint "user_id"
     t.bigint "service_provider_id"

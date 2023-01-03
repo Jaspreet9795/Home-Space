@@ -4,9 +4,10 @@ import {HomeTwoTone} from "@ant-design/icons";
 import Register from "./Register";
 import Login from "./Login";
 import LogOut from "./LogOut";
+import { Link } from "react-router-dom";
 
 
-export default function Header ({updateUser, currentUser}){
+export default function UserHeader ({updateUser, currentUser}){
     const [users, setUsers]= useState([])
     const [loggedIn, setLoggedIn] = useState(currentUser)
     // useEffect(() => {}, [currentUser]);
@@ -31,11 +32,16 @@ export default function Header ({updateUser, currentUser}){
 
     return (
     <Box   display={'flex'}  borderRadius='lg'   px={4} h={"60px"}>
-        <HomeTwoTone style={{ marginTop: '15px', fontSize: '30px' }}/>
-        <Text fontSize={"2xl"} fontFamily={'cursive'} marginLeft="10px" marginTop={'15px'} >Home Space</Text>
-        <Tabs marginTop={'12px'} marginLeft={"800px"} >
+     
+        <HomeTwoTone style={{ marginLeft:"30px", marginTop: '15px', fontSize: '30px' }}/>
+        <Link to="/">
+        <Text fontSize={"2xl"} fontFamily={'cursive'} marginLeft="20px" marginTop={'15px'} >HomeSpace</Text>
+        </Link>
+        <Tabs marginTop={'12px'} marginLeft={"900px"} >
         <TabList >
+          <Link to="my_requests">
         <Tab >My Requests</Tab>
+        </Link>
         <Register addUser={addUser}></Register>
          {!loggedIn ? 
         <Login updateUser={updateUser}></Login>: <LogOut updateUser={updateUser}></LogOut>}

@@ -45,6 +45,7 @@ class ServicesController < ApplicationController
         service.destroy
         head :no_content
     end
+    
 
     private
 

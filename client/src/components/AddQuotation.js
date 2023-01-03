@@ -1,5 +1,6 @@
 import React, { useState, useEffect, forwardRef } from 'react'
 import { Form, Input, Button, Select } from 'antd'
+import { Box } from '@chakra-ui/react'
 
 const { TextArea } = Input
 
@@ -11,7 +12,7 @@ function AddQuotation ({ id, addQuotation, formRef }) {
   const [comments, setComments] = useState('')
   const [quote, setQuote] = useState(null)
   const [loaded, setLoaded] = useState()
-  const  [selectedDate, setSelectedDate]= useState("")
+  const [selectedDate, setSelectedDate] = useState('')
   useEffect(() => {
     fetch(`/services/${id}`)
       .then(r => r.json())
@@ -53,10 +54,12 @@ function AddQuotation ({ id, addQuotation, formRef }) {
     >
       <h1
         style={{
+          marginTop: 20,
           marginBottom: 50,
           fontFamily: 'sans-serif',
           fontSize: 30,
-          fontWeight: 'bold'
+          fontWeight: 'bold',
+          paddingTop: 60
         }}
         align='center'
       >
@@ -106,12 +109,13 @@ function AddQuotation ({ id, addQuotation, formRef }) {
           />
         </Form.Item>
 
-        <Form.Item wrapperCol={{ offset: 12, span: 16 }}>
+        <Form.Item wrapperCol={{ offset: 9, span: 16 }}>
           <Button type='primary' htmlType='submit'>
             Send Quotation
           </Button>
         </Form.Item>
       </Form>
+     
     </div>
   ) : (
     <p>loading</p>

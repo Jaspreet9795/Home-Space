@@ -17,6 +17,10 @@ Rails.application.routes.draw do
   get "/home_painting", to: "users#home_painting"
   get "/filter_service", to: "services#filter_service"
   get "/filter_user_service", to: "services#filter_user_service"
+
+  patch "/confirm_quote/:id", to: "quotations#confirm_quote"
+  get "/show_confirmation", to: "quotations#show_confirmation"
+  get "/show_user_details", to: "quotations#show_user_details"
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Defines the root path route ("/")

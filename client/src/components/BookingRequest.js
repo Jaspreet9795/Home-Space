@@ -1,8 +1,11 @@
 
 import React, { useState } from 'react';
 import { PlusOutlined } from '@ant-design/icons';
-import { Form, Input, Button, Select,  Upload,} from 'antd';
+import { Form, Input, Button, Select,  Upload,message} from 'antd';
+import { Box } from "@chakra-ui/react";
 import DatePicker from "react-multi-date-picker";
+import  Header  from './UserHeader';
+import { Link } from "react-router-dom";
 
 const { TextArea } = Input;
 
@@ -15,7 +18,7 @@ export default function BookingRequest ({addRequest}){
   const [description, setDescription] = useState("")
   const [images, setImages]= useState([])
 
-
+   
    function onSubmit(e){
     console.log(date.map(date=>{
         return date.toString()
@@ -37,12 +40,20 @@ export default function BookingRequest ({addRequest}){
         body: JSON.stringify(newRequest)
     })
     .then(r=>r.json())
-    .then(request=> addRequest(request));
+    .then(request=> {
+      addRequest(request);
+      message.success('Submit success!');
+    });
+    
    }
 
 
   return (
-    <div   style={{height:600, width: 700, marginLeft:450, marginTop:100}} display="flex " borderRadius="2px"  >
+  
+    <div style={{backgroundImage: "url(https://cdn5.vectorstock.com/i/1000x1000/29/69/home-and-house-repair-service-professional-plumber-vector-18032969.jpg)", height:"auto" ,display:"flex"}}>
+     
+    <Box  height={"700"} width="750" marginLeft={"400px"} marginTop="80px" backgroundColor={"white"} marginBottom="90px" borderRadius={"2xl"} >
+    <div  style={{height:600, width: 600, marginLeft:20, marginTop:20, marginRight:20, backgroundColor:"white"}} display="flex " borderRadius="2px"  >
     <h1 style={{marginBottom:50, fontFamily:'sans-serif' ,fontSize:30, fontWeight:'bold'}} align="center">Home Service Request Details...</h1>
     
     
@@ -60,7 +71,7 @@ export default function BookingRequest ({addRequest}){
 
 
         <Form.Item label="Upload related Images " valuePropName="fileList">
-          <Upload value={images}  onChange={e=>setImages(e.target.value)}   action="/upload.do" listType="picture-card" required>
+          <Upload    onChange={e=>setImages(e.target.value)}   listType="picture-card" required>
             <div>
               <PlusOutlined />
               <div
@@ -91,12 +102,21 @@ export default function BookingRequest ({addRequest}){
          </Form.Item>
        
         <Form.Item  wrapperCol={{
-          offset: 12,
-          span: 16,
+          offset: 9,
+          // span: 16,
         }} >
           <Button type="primary" htmlType="submit" >Submit</Button>
+         <Link to="/">
+          <Button  style={{
+              margin: '0 12px',
+            }}    type="primary" htmlType="submit" >  Back </Button>
+            </Link>
+        
+          
         </Form.Item>
       </Form>
+      </div>
+      </Box>
       </div>
   );
 };
