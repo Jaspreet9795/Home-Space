@@ -5,7 +5,7 @@ class ServicesController < ApplicationController
 
     def index 
         services = Service.all
-        render json: services , each_serializer: ServiceWithQuotationsSerializer, status: :ok
+        render json: services , status: :ok
     end
     def  show 
         service = Service.find(params[:id])
@@ -45,7 +45,7 @@ class ServicesController < ApplicationController
         service.destroy
         head :no_content
     end
-    
+
 
     private
 

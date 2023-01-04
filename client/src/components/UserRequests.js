@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import {
   Box,
   Divider,
@@ -15,9 +15,19 @@ import {
   Button,
   ButtonGroup,
   CardFooter,
-  CardHeader
+  CardHeader,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalFooter,
+  ModalBody,
+  ModalCloseButton,
+  useDisclosure
 } from '@chakra-ui/react'
+
 import UserHeader from './UserHeader'
+// import {  Modal } from 'antd';
 
 function convertToDisplayService (service) {
   if (service === 'home_painting') {
@@ -33,13 +43,20 @@ function convertToDisplayService (service) {
   } else return 'unknown service'
 }
 
-export default function UserRequests ({updateUser, currentUser}) {
+export default function UserRequests ({ updateUser, currentUser }) {
   const [services, setServices] = useState([])
   const [quotes, setQuotes] = useState([])
   const [reviewQuote, setReviewQuote] = useState(false)
   const [id, setId] = useState(1)
-  const [confirm, setConfirm]= useState(false)
+  const [confirm, setConfirm] = useState(false)
+  //   const [deleteAlert, setDeleteAlert] = useState(false)
 
+  //   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const { isOpen, onOpen, onClose } = useDisclosure()
+
+  const initialRef = React.useRef(null)
+  const finalRef = React.useRef(null)
 
   useEffect(() => {
     fetch('/filter_user_service')
@@ -51,35 +68,51 @@ export default function UserRequests ({updateUser, currentUser}) {
       })
   }, [confirm])
 
-
-  
-
   function handleConfirm (id) {
     // e.preventDefault();
-   const confirm_quote={
-    confirmed: true
-   }
-
+    const confirm_quote = {
+      confirmed: true
+    }
     fetch(`confirm_quote/${id}`, {
-        method: "PATCH", 
-        headers: {
-            'Content-Type': 'application/json',
-            "Accept" :"application/json"
-        }, 
-        body : JSON.stringify(confirm_quote)
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json'
+      },
+      body: JSON.stringify(confirm_quote)
     })
-    .then (r=>{
-        console.log("Confirm Response" + JSON.stringify(r))
-    })
-    .then (setConfirm(!confirm))
-    
+      .then(r => {
+        console.log('Confirm Response' + JSON.stringify(r))
+      })
+      .then(setConfirm(!confirm))
   }
 
-  function handleShowQuotes () {}
+  function handleDelete (id) {
+    fetch(`/services/${id}`, {
+      method: 'DELETE'
+    }).then(r => {
+      if (r.ok) {
+        setServices(services => services.filter(service => service.id !== id))
+      }
+    })
+  }
+
+  //   const showModal = () => {
+  //     setIsModalOpen(true);
+  //   };
+  //   const handleOk = () => {
+  //     setIsModalOpen(false);
+  //   };
+  //   const handleCancel = () => {
+  //     setIsModalOpen(false);
+  //   };
 
   return (
     <>
-      <UserHeader   updateUser={updateUser}   currentUser={currentUser} ></UserHeader>
+      <UserHeader
+        updateUser={updateUser}
+        currentUser={currentUser}
+      ></UserHeader>
       <Box
         marginTop={'100px'}
         marginStart={'150px'}
@@ -147,9 +180,53 @@ export default function UserRequests ({updateUser, currentUser}) {
                       size={'md'}
                       marginLeft='80px'
                       marginBottom={'20px'}
+                      onClick={onOpen}
+                      //   onClick={() => handleDelete(service.id)}
                     >
-                      Edit Request
+                      Delete Request
                     </Button>
+
+                    {/* <Modal title="Basic Modal" open={isModalOpen} onOk={() => {
+                        handleDelete(service.id)
+                        handleOk() }
+                    }
+                   
+                     onCancel={handleCancel}>
+        <p>Are you sure you want to delete the request?</p>
+        
+      </Modal> */}
+
+                    <Modal
+                      initialFocusRef={initialRef}
+                      finalFocusRef={finalRef}
+                      isOpen={isOpen}
+                      onClose={onClose}
+                      size={'lg'}
+                    >
+                      <ModalOverlay />
+                      <ModalContent>
+                        <ModalHeader>Delete Alert!</ModalHeader>
+                        <ModalCloseButton />
+                        <ModalBody pb={6}></ModalBody>
+                        <Text marginLeft={20}>
+                          Are you sure you want to delete the request?
+                        </Text>
+                        <ModalFooter>
+                          <Button
+                            onClick={() => {
+                              handleDelete(service.id)
+                              onClose()
+                            }}
+                            colorScheme='blue'
+                            mr={3}
+                          >
+                            Delete
+                          </Button>
+                          <Button onClick={onClose}>Cancel</Button>
+                        </ModalFooter>
+                      </ModalContent>
+                    </Modal>
+
                     <Button
                       variant='ghost'
                       colorScheme='blue'
@@ -222,8 +299,13 @@ export default function UserRequests ({updateUser, currentUser}) {
                           </Text>
                         </CardBody>
                         <CardFooter>
-                          <Button size={'md'} onClick={()=>{handleConfirm(quote.id)}}>
-                            {quote.confirmed?<> Confirmed </>: <>Confirm</>  }
+                          <Button
+                            size={'md'}
+                            onClick={() => {
+                              handleConfirm(quote.id)
+                            }}
+                          >
+                            {quote.confirmed ? <> Confirmed </> : <>Confirm</>}
                           </Button>
                         </CardFooter>
                       </Card>
