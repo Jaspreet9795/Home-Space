@@ -42,7 +42,7 @@ module Backend
     config.action_dispatch.cookies_same_site_protection = :strict
     config.after_initialize do
       # ActiveRecord::Migrator.migrate (Rails.root + "/db/migrate" )
-      ActiveRecord::MigrationContext.new("db/migrate/", ActiveRecord::SchemaMigration).migrate(env_migration_version)
+      ActiveRecord::MigrationContext.new("db/migrate/", ActiveRecord::SchemaMigration).migrate()
     end
   end
 end
