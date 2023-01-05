@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import {
+  Box,
   Modal,
   ModalOverlay,
   ModalContent,
@@ -10,15 +11,15 @@ import {
   ModalCloseButton,
   Button,
   FormControl,
-  FormLabel,
   Input,
   useDisclosure,
   Tab,
   Tabs,
-  Select,
-  InputGroup,
+  Alert,
+  AlertIcon,
+  AlertDescription,
   InputRightElement,
-  InputLeftAddon
+  InputGroup
 } from '@chakra-ui/react'
 
 export default function Login ({ updateUser }) {
@@ -30,9 +31,11 @@ export default function Login ({ updateUser }) {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [register, setRegister] = useState('')
-  const [errors, setErrors] = useState([])
-
+  const [error, setError] = useState(false)
+  const [showPassword, setShowPassword] = useState(false)
   const navigate = useNavigate()
+
+  const handleClick = () => setShowPassword(!showPassword)
 
   function handleLogin (e) {
     e.preventDefault()
@@ -55,17 +58,17 @@ export default function Login ({ updateUser }) {
           if (user.id !== undefined) {
             console.log('checking response ' + JSON.stringify(r))
             updateUser(user)
-            if (user.role == 'service_provider') {
+            if (user.role === 'service_provider') {
               navigate('/service_provider_dashboard')
             } else {
               navigate('/')
             }
           } else {
-            // TODO: set error message because credentials are wrong
+            setError(true)
           }
         })
       } else {
-        r.json().then(json => setErrors(json.errors))
+        r.json().then(json => setError(json.error))
       }
     })
   }
@@ -83,27 +86,52 @@ export default function Login ({ updateUser }) {
         >
           <ModalOverlay />
           <ModalContent>
-            <ModalHeader>Create your account</ModalHeader>
+            <ModalHeader marginLeft={'170px'}>Login</ModalHeader>
+            {error && (
+              <Box marginLeft={'90px'} marginBottom={5} w={'60%'}>
+                <Alert status='error' borderRadius={4}>
+                  <AlertIcon />
+                  <AlertDescription>
+                    {' '}
+                    Invalid Email or Password!
+                  </AlertDescription>
+                </Alert>
+              </Box>
+            )}
             <ModalCloseButton />
             <ModalBody pb={6}>
-              <FormControl>
+              <FormControl isRequired>
                 <Input
+                  value={email}
                   ref={initialRef}
                   placeholder='Email'
                   onChange={e => setEmail(e.target.value)}
                 />
               </FormControl>
 
-              <FormControl mt={4}>
-                <Input
-                  placeholder='Password'
-                  onChange={e => setPassword(e.target.value)}
-                />
+              <FormControl mt={4} id='password' isRequired>
+                <InputGroup>
+                  <Input
+                    h='40px'
+                    type={showPassword ? 'text' : 'password'}
+                    placeholder='Password'
+                    onChange={e => setPassword(e.target.value)}
+                    required
+                  ></Input>
+                  <InputRightElement width={'4.5rem'}>
+                    <Button h='1.5rem' size='sm' onClick={handleClick}>
+                      {showPassword ? 'Hide' : 'Show'}
+                    </Button>
+                  </InputRightElement>
+                </InputGroup>
               </FormControl>
             </ModalBody>
 
             <ModalFooter>
-              <Button onClick={handleLogin}>Login</Button>
+              <Button width={'50%'} marginRight={'100px'} onClick={handleLogin}>
+                Login
+              </Button>
+              <br></br>
             </ModalFooter>
           </ModalContent>
         </Modal>

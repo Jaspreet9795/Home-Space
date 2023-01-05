@@ -5,4 +5,6 @@ class QuotationWithUsersSerializer < ActiveModel::Serializer
     def user_info
         User.find(object.service.user_id)
     end
+
+
   end

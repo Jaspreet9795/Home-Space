@@ -1,52 +1,85 @@
 import React, { useEffect, useState } from 'react'
-import { Box, Text, Tab, Tabs, TabList } from '@chakra-ui/react'
+import { Box, Text, Tab, Tabs, TabList ,Button, background, color} from '@chakra-ui/react'
 import { HomeTwoTone } from '@ant-design/icons'
 import { Link } from 'react-router-dom'
 import ProviderHeader from './ProviderHeader'
+import Login from './Login'
+import LogOut from './LogOut'
 
 import { Table } from 'antd'
-const columns = [
-  {
-    title: 'Name',
-    dataIndex: ['user_info', 'name'],
-    // key: 'user_info.name'
-  },
-  {
-    title: 'Phone',
-    dataIndex: ['user_info', 'phone'],
-    // key: 'user_info.phone'
-  },
-  {
-    title: 'Address',
-    dataIndex: ['user_info','address'],
-    // key: 'user_info.address'
-  },
-  {
-    title: 'Quoted Price',
-    dataIndex: 'quotation',
-    key: 'quotation'
-  },
-  {
-    title: 'Date',
-    dataIndex: 'date',
-    key: 'date'
-  },
-  {
-    title: 'Action',
-    dataIndex: '',
-    key: 'actio',
-    render: () =>  <a> Completed </a>
-  }
-]
-
 
 
 
 
 export default function ConfirmedBookings ({updateUser, currentUser}) {
 const [quote, setQuote]=useState([])
-const [user, setUser]=useState([])
+const [users, setUsers]=useState([])
 const [isCompleted, setIsCompleted]= useState(false)
+
+  const [loggedIn, setLoggedIn] = useState(currentUser)
+  // useEffect(() => {}, [currentUser]);
+
+  useEffect(() => {
+    setLoggedIn(currentUser)
+    //   console.log('changing logged in')
+  }, [currentUser])
+
+  useEffect(() => {
+    fetch('/users')
+      .then(r => r.json())
+      .then(users => setUsers(users))
+  }, [])
+
+function handleCompletion(){
+    setIsCompleted(!isCompleted)
+}
+
+const columns = [
+    {
+        title: 'Quote Id',
+        dataIndex: 'id',
+        key: 'id'
+        // key: 'user_info.name'
+      },
+
+    {
+      title: 'Client Name',
+      dataIndex: ['user_info', 'name'],
+    //   key: 'id'
+    },
+    {
+      title: 'Client Phone',
+      dataIndex: ['user_info', 'phone'],
+      // key: 'user_info.phone'
+    },
+    {
+      title:  ' Client Address',
+      dataIndex: ['user_info','address'],
+      // key: 'user_info.address'
+    },
+    {
+      title: 'Quoted Price',
+      dataIndex: 'quotation',
+      key: 'quotation'
+    },
+    {
+      title: 'Date',
+      dataIndex: 'date',
+      key: 'date'
+    },
+    {
+      title: 'Action',
+      dataIndex: '',
+      key: 'action',
+      render: () =>  <Button onClick={(id)=>{
+        handleCompletion(id)
+        console.log("Completion click"  )
+      }}  size={"sm"}> Mark Completed</Button>
+  
+    }
+  ]
+  
+  
 
 
   
@@ -62,9 +95,32 @@ useEffect(()=>{
 
 
   return (
-    <>
-    <ProviderHeader updateUser={updateUser}  currentUser={currentUser} ></ProviderHeader>
-     
+    <div style={{backgroundImage:"url(https://ideausher.com/wp-content/uploads/2020/02/5e4129dea00b3.png)" , width:"1510px", height: "860px"}}>
+    {/* <ProviderHeader updateUser={updateUser}  currentUser={currentUser} ></ProviderHeader> */}
+    <Box display={'flex'} borderRadius='lg' px={4} h={'60px'}>
+      <HomeTwoTone
+        style={{ marginLeft: '30px', marginTop: '15px', fontSize: '30px' }}
+      />
+      <Link to='/service_provider_dashboard'>
+        <Text
+          fontSize={'2xl'}
+          fontFamily={'cursive'}
+          marginLeft='20px'
+          marginTop={'15px'}
+        >
+          HomeSpace
+        </Text>
+      </Link>
+      <Tabs marginTop={'12px'} marginLeft={'1100px'}>
+        <TabList>
+        {!loggedIn ? (
+            <Login updateUser={updateUser}></Login>
+          ) : (
+            <LogOut updateUser={updateUser}></LogOut>
+          )}
+        </TabList>
+      </Tabs>
+    </Box>
 
       <Box
         marginTop={'150px'}
@@ -78,7 +134,11 @@ useEffect(()=>{
         borderWidth={'thin'}
       >
         <Table
-          style={{ width: 1000, height: 600 }}
+          
+          rowKey= "id"
+          style={{ width: 1000, height: 600 ,  }}
+          rowClassName = {isCompleted? "bg-grey": 'bg-red'}
+
           columns={columns}
           expandable={{
             expandedRowRender: record => (
@@ -95,6 +155,6 @@ useEffect(()=>{
           dataSource={quote}
         />
       </Box>
-    </>
+    </div>
   )
 }

@@ -133,10 +133,12 @@ export default function UserRequests ({ updateUser, currentUser }) {
           display='grid'
           borderRadius='3xl'
           borderWidth={'thin'}
+          //   backgroundImage={
+          //     'https://t4.ftcdn.net/jpg/03/33/21/09/360_F_333210966_pfz4MQFkZxYqwGaK6DbfMcF747ciIh9x.jpg'
+          //   }
           backgroundImage={
-            'https://t4.ftcdn.net/jpg/03/33/21/09/360_F_333210966_pfz4MQFkZxYqwGaK6DbfMcF747ciIh9x.jpg'
+            'https://thumbs.dreamstime.com/b/hammer-wrench-house-icon-wooden-table-over-blur-gree-green-tree-background-home-service-concept-80026299.jpg'
           }
-          //   backgroundImage={"https://inc42.com/wp-content/uploads/2015/08/home-services.jpg"}
         >
           {services.map(service => {
             return (
@@ -186,15 +188,7 @@ export default function UserRequests ({ updateUser, currentUser }) {
                       Delete Request
                     </Button>
 
-                    {/* <Modal title="Basic Modal" open={isModalOpen} onOk={() => {
-                        handleDelete(service.id)
-                        handleOk() }
-                    }
-                   
-                     onCancel={handleCancel}>
-        <p>Are you sure you want to delete the request?</p>
-        
-      </Modal> */}
+                  
 
                     <Modal
                       initialFocusRef={initialRef}
@@ -251,16 +245,15 @@ export default function UserRequests ({ updateUser, currentUser }) {
         <GridItem
           marginLeft={'10px'}
           marginTop={'10px'}
-          overflow='scroll'
+          overflow='auto'
           height={'580px'}
           width={'500px'}
-          display='grid'
+          whiteSpace='break-spaces'
           borderRadius='3xl'
           borderWidth={'thin'}
           marginRight='10px'
-          //   backgroundImage={"https://inc42.com/wp-content/uploads/2015/08/home-services.jpg"}
           backgroundImage={
-            'https://t4.ftcdn.net/jpg/03/33/21/09/360_F_333210966_pfz4MQFkZxYqwGaK6DbfMcF747ciIh9x.jpg'
+            'https://thumbs.dreamstime.com/b/hammer-wrench-house-icon-wooden-table-over-blur-gree-green-tree-background-home-service-concept-80026299.jpg'
           }
         >
           {services.map(service => {
@@ -273,6 +266,7 @@ export default function UserRequests ({ updateUser, currentUser }) {
                 marginLeft={'50px'}
                 marginRight='20px'
                 spacing={5}
+                position='absolute'
               >
                 {service.quotations
                   .filter(quote => quote.service_id === id)
@@ -284,9 +278,14 @@ export default function UserRequests ({ updateUser, currentUser }) {
                         height={'auto'}
                         backgroundColor={'white'}
                       >
-                        <CardHeader>
-                          <Heading size='md'> Provider's NAme </Heading>
-                        </CardHeader>
+                        { service.service_provider.filter(item=> item.id===quote.service_provider_id)
+                        .map(item => { 
+                           return <CardHeader key={item.id}>
+    
+                            <Heading size='md'> {item.name} </Heading>
+                          </CardHeader>
+                        })}
+
                         <CardBody>
                           <Text>
                             <b>Comments:</b> {quote.comment}

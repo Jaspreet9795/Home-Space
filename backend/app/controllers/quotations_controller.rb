@@ -8,7 +8,7 @@ class QuotationsController < ApplicationController
     end
     def  show 
         quotation = Quotation.find(params[:id])
-        render json: quotation,   status: :ok
+        render json: quotation ,  status: :ok
     end
 
     def create

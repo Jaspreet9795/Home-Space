@@ -17,8 +17,9 @@ class UsersController < ApplicationController
         render json: user, status: :ok
     end 
 
-    def service_providers
+    def users_service_providers
         user= User.where(role: "Service Provider")
+        # user = User.all
         render json: user, status: :ok
     end 
 
