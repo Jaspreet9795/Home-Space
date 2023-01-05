@@ -50,7 +50,7 @@ class ServicesController < ApplicationController
     private
 
     def service_params
-        params.permit(:service_type, :description, :images, {:dates=>[]})
+        params.permit(:service_type, :description, :images, {:dates=>[]}, :completion)
     end
 
     def entity_not_found_response
