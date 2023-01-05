@@ -41,7 +41,8 @@ module Backend
     # Use SameSite=Strict for all cookies to help protect against CSRF
     config.action_dispatch.cookies_same_site_protection = :strict
     config.after_initialize do
-      ActiveRecord::Migrator.migrate (Rails.root + "/db/migrate" )
+      # ActiveRecord::Migrator.migrate (Rails.root + "/db/migrate" )
+      ActiveRecord::MigrationContext.new("db/migrate/", ActiveRecord::SchemaMigration).migrate(env_migration_version)
     end
   end
 end
