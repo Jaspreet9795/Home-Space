@@ -17,12 +17,11 @@ import LogOut from './LogOut'
 
 import { Table } from 'antd'
 
-
-function getStatusText(obj) {
-    if(obj.service.completion === true) {
-        return 'Completed'
-    }
-    return 'Mark Completed'
+function getStatusText (obj) {
+  if (obj.service !== null && obj.service.completion === true) {
+    return 'Completed'
+  }
+  return 'Mark Completed'
 }
 
 export default function ConfirmedBookings ({ updateUser, currentUser }) {
@@ -76,23 +75,19 @@ export default function ConfirmedBookings ({ updateUser, currentUser }) {
       title: 'Service Id',
       dataIndex: ['service', 'id'],
       key: 'id'
-      // key: 'user_info.name'
     },
 
     {
       title: 'Client Name',
       dataIndex: ['user_info', 'name']
-      //   key: 'id'
     },
     {
       title: 'Client Phone',
       dataIndex: ['user_info', 'phone']
-      // key: 'user_info.phone'
     },
     {
       title: ' Client Address',
       dataIndex: ['user_info', 'address']
-      // key: 'user_info.address'
     },
     {
       title: 'Quoted Price',
@@ -173,7 +168,6 @@ export default function ConfirmedBookings ({ updateUser, currentUser }) {
         <Table
           rowKey='id'
           style={{ width: 1000, height: 600 }}
-        //   rowClassName={isCompleted ? 'bg-grey' : 'bg-red'}
           columns={columns}
           expandable={{
             expandedRowRender: record => (

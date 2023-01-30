@@ -7,27 +7,29 @@ class ServicesController < ApplicationController
         services = Service.all
         render json: services , status: :ok
     end
+   
+
     def  show 
         service = Service.find(params[:id])
         puts('show service ', service.inspect)
-        render json: service, serializer: ServiceWithQuotationsSerializer , status: :ok
+        render json: service, serializer: ServiceSerializer , status: :ok
     end
 
     def filter_service
         user = current_user
         service = Service.where(service_type: current_user.service_provided)
-        render json: service 
+        render json: service , each_serializer: ServiceSerializer
     end 
 
+    # show services created by  clients along with quotations and service provider's name
     def filter_user_service
        user= current_user
        service = Service.where(user_id: current_user.id)
-    #    service = Service.where(user_id: current_user.id).to_a
        render json: service, each_serializer: ServiceWithQuotationsSerializer,  status: :ok
     end 
 
    
-
+   # when service request is created User_id is added based on logged in user id
     def create
         puts(service_params)
         service = Service.create!(service_params.merge(user_id: current_user.id) )

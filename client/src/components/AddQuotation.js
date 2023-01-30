@@ -1,5 +1,5 @@
 import React, { useState, useEffect, forwardRef } from 'react'
-import { Form, Input, Button, Select } from 'antd'
+import { Form, Input, Button, Select, message } from 'antd'
 import { Box } from '@chakra-ui/react'
 
 const { TextArea } = Input
@@ -41,6 +41,10 @@ function AddQuotation ({ id, addQuotation, formRef }) {
       .then(r => r.json())
       .then(newQuote => {
         addQuotation(newQuote)
+        setComments('')
+        setQuote('')
+        setSelectedDate('')
+        message.success('Quote Sunbmitted!')
       })
   }
 
@@ -49,8 +53,9 @@ function AddQuotation ({ id, addQuotation, formRef }) {
       display='flex '
       borderRadius='2px'
       id='addquotation'
-      style={{ height: 600, width: 700 }}
+      style={{ height: 600, width: 700}}
       ref={formRef}
+      
     >
       <h1
         style={{
@@ -68,6 +73,7 @@ function AddQuotation ({ id, addQuotation, formRef }) {
       <Form layout='vertical' onFinish={onSubmit}>
         <Form.Item label='Select Service Date'>
           <Select
+          value={selectedDate}
             onChange={e => {
               setSelectedDate(e)
               console.log('Selected' + e)

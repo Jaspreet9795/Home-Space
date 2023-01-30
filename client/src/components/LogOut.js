@@ -20,7 +20,9 @@ export default function LogOut ({ updateUser }) {
     }).then(r => {
         // updateUser(false)
       if (r.ok) {
-        updateUser(false)
+        r.json().then(updateUser(false))
+        navigate("/")
+
       } else {
         r.json().then(json => setErrors(json.errors))
       }

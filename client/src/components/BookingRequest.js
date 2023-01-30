@@ -53,6 +53,7 @@ export default function BookingRequest ({ addRequest }) {
         setDescription('')
         setDate('')
         setCategory('')
+        setShowConfirm(!showConfirm)
       })
   }
 
@@ -60,13 +61,13 @@ export default function BookingRequest ({ addRequest }) {
     <div
       style={{
         backgroundImage:
-          'url(https://cdn5.vectorstock.com/i/1000x1000/29/69/home-and-house-repair-service-professional-plumber-vector-18032969.jpg)',
-        height: 'auto',
+          'url(https://cdn5.vectorstock.com/i/1000x1000/29/69/home-and-house-repair-service-professional-plumber-vector-18032969.jpg)' ,
+        height: '860px',
         display: 'flex'
       }}
     >
       <Box
-        height={'750'}
+        height={'650'}
         width='750'
         marginLeft={'400px'}
         marginTop='80px'
@@ -126,7 +127,7 @@ export default function BookingRequest ({ addRequest }) {
               </Select>
             </Form.Item>
 
-            <Form.Item label='Upload related Images ' valuePropName='fileList'>
+            {/* <Form.Item label='Upload related Images ' valuePropName='fileList'>
               <Upload
                 onChange={e => setImages(e.target.value)}
                 listType='picture-card'
@@ -143,7 +144,7 @@ export default function BookingRequest ({ addRequest }) {
                   </div>
                 </div>
               </Upload>
-            </Form.Item>
+            </Form.Item> */}
 
             <Form.Item label='Request Description:'>
               <TextArea

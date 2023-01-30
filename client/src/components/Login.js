@@ -44,7 +44,6 @@ export default function Login ({ updateUser }) {
       password: password
     }
     let url = '/login'
-    // if (register) url = '/users'
 
     fetch(url, {
       method: 'POST',
