@@ -56,7 +56,8 @@ export default function ServiceProviderDashboard ({ currentUser, updateUser }) {
     setQuotations([...quotations, newQuote])
   }
 
-  const checkAdd = quotations.filter(quote => quote.service_id === id)
+  // const checkAdd = quotations.filter(quote => quote.service_id === id)
+  const checkAdd = quotations.filter(quote => id === quote.service_id).filter(quote => quote.service_provider_id === currentUser.id)
 
   const handleClick = () => {
     if (checkAdd.length > 0) {
