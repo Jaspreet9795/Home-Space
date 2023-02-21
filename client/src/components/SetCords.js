@@ -8,7 +8,7 @@ import GoogleMapReact from 'google-map-react'
 export default function SetCords ({ service }) {
   const [lat, setLat] = useState()
   const [lon, setLon] = useState()
-  const key = 'AIzaSyBPKfdOLp_oaeo4RAB7AvcWSquYBQZws6k'
+//   const key = 
   let url = `https://maps.googleapis.com/maps/api/geocode/json?address=+${service.user.address},+${service.user.state},+${service.user.zip}&key=${key}`
   useEffect(() => {
     fetch(url)
@@ -30,15 +30,6 @@ export default function SetCords ({ service }) {
   console.log('check M1' + JSON.stringify(service.user.address))
   console.log('lat '+lat+' lon '+lon)
   
-
-
-//   let userInfo = {
-//     center: {
-//       lat: lat,
-//       lng: lon
-//     },
-//     zoom: 10
-//   }
 
   const renderMarker = (map, maps) => {
     let marker = new maps.Marker({
